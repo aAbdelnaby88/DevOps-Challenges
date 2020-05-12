@@ -1,0 +1,31 @@
+version: '2'
+
+services:
+  database: 
+    image: redis
+    container_name: redis
+    volumes:
+      - .:/var/lib/redis
+    networks:
+      - connect
+  
+  app:
+    links:
+      - database
+    build: ./
+    ports:
+      - ${PORT}:${PORT}
+    env_file:
+      - ./.env 
+    depends_on:
+      - database
+    volumes:
+      - .:/app
+    environment:
+      - REDIS_HOST=redis
+    networks:
+      - connect
+
+
+networks:
+  connect: 
