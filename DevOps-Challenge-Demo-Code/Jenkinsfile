@@ -1,0 +1,23 @@
+def result= false
+pipeline {
+    agent any
+    stages {
+        stage('Test') {
+            steps {
+                script{
+                result = sh( script:'tests/test.py',returnStatus: true ) == 0
+                }
+            }
+        }
+        stage('Build') {
+            when{
+                expression { result }
+            }
+            steps {
+                script{
+                    sh( script:'docker-compose up -d')
+                }
+            }
+        }
+    }
+}
