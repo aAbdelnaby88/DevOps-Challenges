@@ -5,6 +5,7 @@ pipeline {
         stage('Test') {
             steps {
                 script{
+                        sh('docker-compose up test -d')
                 result = sh( script:'tests/test.py',returnStatus: true ) == 0
                 }
             }
