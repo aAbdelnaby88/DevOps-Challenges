@@ -19,10 +19,12 @@ services:
       - ./.env 
     depends_on:
       - database
+    command: ["${CMD}"]
     volumes:
       - .:/app
     environment:
       - REDIS_HOST=redis
+      - PORT =${PORT}
     networks:
       - connect
 

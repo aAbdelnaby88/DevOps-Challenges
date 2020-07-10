@@ -3,20 +3,20 @@ pipeline {
     agent any
     stages {
         stage('Test') {
-            steps {
-                script{
-                        sh(script:'docker-compose up -d')
-                result = sh( script:'tests/test.py',returnStatus: true ) == 0
+            steps{
+                script {
+                    withEnv(["CMD=tests/test.py", "PORT=20000"])
+                    result=sh(script: "docker-compose up", returnStatus: true)== 0
                 }
             }
         }
         stage('Build') {
-            when{
-                expression { result }
-            }
             steps {
                 script{
+                    if (result){
+                    withEnv(["CMD=hello.py", "PORT=20002"])
                     sh( script:'docker-compose up -d')
+                    }
                 }
             }
         }
