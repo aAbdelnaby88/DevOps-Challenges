@@ -7,6 +7,7 @@ services:
     hostname: redis
     volumes:
       - .:/var/lib/redis
+    command: ["redis-server", "--appendonly", "yes"]
     networks:
       - connect
   
