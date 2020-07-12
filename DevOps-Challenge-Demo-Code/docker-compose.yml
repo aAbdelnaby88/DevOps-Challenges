@@ -4,6 +4,7 @@ services:
   database: 
     image: redis
     container_name: redis
+    hostname: redis
     volumes:
       - .:/var/lib/redis
     networks:
