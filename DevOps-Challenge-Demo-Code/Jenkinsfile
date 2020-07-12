@@ -5,8 +5,8 @@ pipeline {
         stage('Test') {
             steps{
                 script {
-                    withEnv(["CMD=tests/test.py", "PORT=20000"]){
-                        result=sh(script: "docker-compose up --build", returnStatus: true)== 0
+                    withEnv(["CMD=tests/test.py", "PORT=10000"]){
+                        result = sh ( script: "docker-compose up -p test", returnStatus: true ) == 0
                     }
                 }
             }
@@ -15,8 +15,8 @@ pipeline {
             steps {
                 script{
                     if (result){
-                    withEnv(["CMD=hello.py", "PORT=20002"]){
-                            sh( script:'docker-compose up -d --build')
+                    withEnv(["CMD=hello.py", "PORT=10002"]){
+                            sh ( script: "docker-compose up -d" )
                         }
                     }
                 }
