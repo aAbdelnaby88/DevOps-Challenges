@@ -6,7 +6,7 @@ pipeline {
             steps{
                 script {
                     withEnv(["CMD=tests/test.py", "PORT=10000"]){
-                        result = sh ( script: "docker-compose up -p test", returnStatus: true ) == 0
+                        result = sh ( script: "docker-compose up -d", returnStatus: true ) == 0
                     }
                 }
             }
